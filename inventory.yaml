@@ -7,6 +7,7 @@ lb
 [OSEv3:vars]
 # SSH user, this user should allow ssh based auth without requiring a password
 ansible_ssh_user=cjonagam
+openshift_master_cluster_method=native
 
 # If ansible_ssh_user is not root, ansible_become must be set to true
 ansible_become=true
@@ -18,26 +19,26 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 
 # host group for masters
 [masters]
-master1.c.enhanced-mote-157823.internal
-master2.c.enhanced-mote-157823.internal
-master3.c.enhanced-mote-157823.internal
+master1.c.enhanced-mote-157823.internal containerized=true
+master2.c.enhanced-mote-157823.internal containerized=true
+master3.c.enhanced-mote-157823.internal containerized=true
 
 # host group for etcd
 [etcd]
-master1.c.enhanced-mote-157823.internal
-master2.c.enhanced-mote-157823.internal
-master3.c.enhanced-mote-157823.internal
+master1.c.enhanced-mote-157823.internal containerized=true
+master2.c.enhanced-mote-157823.internal containerized=true
+master3.c.enhanced-mote-157823.internal containerized=true
 
 # host group for nodes, includes region info
 [nodes]
-master1.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'master'}"
-master2.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'master'}"
-master3.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'master'}"
-node1.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'node'}"
-node2.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'node'}"
+master1.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
+master2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
+master3.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
+node1.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'node'}"
+node2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'node'}"
 
 [lb]
-master2.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'infra'}"
-master3.c.enhanced-mote-157823.internal openshift_node_labels="{'type':'infra'}"
+master2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'infra'}"
+master3.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'infra'}"
 
 
