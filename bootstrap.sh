@@ -14,3 +14,25 @@ gcloud compute instances create "master3" --zone "asia-east1-a" --machine-type "
 gcloud compute instances create "node1" --zone "asia-east1-a" --machine-type "n1-standard-1" --subnet "default" --image "centos-7-v20170223" --image-project "centos-cloud" --boot-disk-size "60" --boot-disk-type "pd-ssd" --boot-disk-device-name "node1"
 
 gcloud compute instances create "node2" --zone "asia-east1-a" --machine-type "n1-standard-1" --subnet "default" --image "centos-7-v20170223" --image-project "centos-cloud" --boot-disk-size "60" --boot-disk-type "pd-ssd" --boot-disk-device-name "node2"
+
+
+gcloud compute ssh master1
+
+add master1 non-root key to  cloud.google.com   ssh-keys in UI
+
+
+
+sudo yum -y erase ansible
+sudo yum install -y "@Development Tools" python2-pip openssl-devel python-devel
+sudo pip install -Iv ansible==2.2.0.0
+
+
+Let's Encrypt setup
+Create an A record in route53 pointing to master1
+www, * , root all pointing to  master1
+
+sudo yum install nginx
+
+place challenge files in  /usr/share/nginx/html
+
+then verify
