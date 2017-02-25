@@ -11,6 +11,8 @@ openshift_master_cluster_method=native
 openshift_master_cluster_hostname=apps.expertsfactory.com
 openshift_master_default_subdomain=apps.expertsfactory.com
 openshift_hosted_metrics_deploy=true
+os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
+openshift_hosted_metrics_public_url=https://hawkular-metrics.apps.expertsfactory.com/hawkular/metrics
 # openshift_hosted_metrics_storage_kind=EmptyDir
 # If ansible_ssh_user is not root, ansible_become must be set to true
 ansible_become=true
