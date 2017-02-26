@@ -141,6 +141,8 @@ Allow http / https for each masters on google cloud console
 ## on each master
 change master-config to update masterPublicURL, publicURL, corsAllowedOrigins, oauthConfig --all sections
 systemctl restart origin-master-controllers
-
+oc policy add-role-to-user admin system:serviceaccounts:default:default
+oc adm router router-west --replicas=1 --service-account=router
+oc adm registry --config=/etc/origin/master/admin.kubeconfig --service-account=registry
 
 
