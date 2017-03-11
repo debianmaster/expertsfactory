@@ -145,15 +145,15 @@ oc policy add-role-to-user admin system:serviceaccounts:default:default
 oc adm router router-west --replicas=1 --service-account=router
 oc adm registry --config=/etc/origin/master/admin.kubeconfig --service-account=registry
 
-# loadbalancer
-use tcp - loadbalancer
-Frontend
+# loadbalancer  
+use tcp - loadbalancer  
+Frontend  
 
-Protocol	IP:Port
-TCP	35.185.xxx.37:80-443
-Backend
+Protocol	IP:Port  
+TCP	35.185.xxx.37:80-443  
+Backend  
 
-Name: httpdx Region: us-west1 Session affinity: None  Health check: haproxy-port
-Instances	35.yyy.217.37
-infra-1	
-infra-2	
+Name: httpdx Region: us-west1 Session affinity: None  Health check: haproxy-port  
+Instances	35.yyy.217.37  
+infra-1	  
+infra-2	  
