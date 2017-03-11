@@ -1,3 +1,7 @@
+# --scopes 458438154671-compute@developer.gserviceaccount.com="https://www.googleapis.com/auth/cloud-platform"
+# --subnet "default"
+# --boot-disk-type "pd-ssd"
+
 gcloud compute instances create "master1" --zone "asia-east1-a" --machine-type "g1-small" --subnet "default" --image "centos-7-v20170223" --image-project "centos-cloud" --boot-disk-size "20" --boot-disk-type "pd-ssd" --boot-disk-device-name "master1"
 
 gcloud compute  firewall-rules create "default-allow-http" --allow tcp:80 --network "default" --source-ranges "0.0.0.0/0" --target-tags "http-server"
