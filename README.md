@@ -157,3 +157,30 @@ Name: httpdx Region: us-west1 Session affinity: None  Health check: haproxy-port
 Instances	35.yyy.217.37  
 infra-1	  
 infra-2	  
+
+
+```sh
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: fast
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd  
+  zone: us-west1-a  
+```
+
+```sh
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvc-registry
+ annotations:
+   volume.beta.kubernetes.io/storage-class: fast
+spec:
+ accessModes:
+  - ReadWriteMany
+ resources:
+   requests:
+     storage: 30Gi
+ ```
