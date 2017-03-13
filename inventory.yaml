@@ -1,55 +1,76 @@
 [OSEv3:children]
 masters
 nodes
+new_nodes
+etcd
 lb
-
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
 # SSH user, this user should allow ssh based auth without requiring a password
-ansible_ssh_user=cjonagam
+ansible_ssh_user=root
+openshift_release=v1.4.1
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=apps.expertsfactory.com
-openshift_master_default_subdomain=apps.expertsfactory.com
-openshift_hosted_metrics_deploy=true
+openshift_master_cluster_hostname=cloud.expertsfactory.com
+openshift_master_cluster_public_hostname=cloud.expertsfactory.com
+openshift_master_default_subdomain=cloud.expertsfactory.com
+## SDN
 os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
-openshift_hosted_metrics_public_url=https://hawkular-metrics.apps.expertsfactory.com/hawkular/metrics
 openshift_docker_options="--selinux-enabled --insecure-registry 172.30.0.0/16"
 openshift_image_tag=latest
 openshift_master_console_port=443
 openshift_master_api_port=443
-# openshift_hosted_metrics_storage_kind=EmptyDir
-# If ansible_ssh_user is not root, ansible_become must be set to true
-ansible_become=true
-
+#ansible_become=true
+openshift_cloudprovider_kind=gce
+## Metrics
+openshift_hosted_metrics_storage_kind=dynamic
+openshift_hosted_metrics_deploy=true
+openshift_hosted_registry_replicas=2
+openshift_hosted_router_selector='region=infra'
+openshift_hosted_metrics_public_url=https://hawkular-metrics.cloud.expertsfactory.com/hawkular/metrics
+## Logging
+openshift_hosted_logging_storage_kind=dynamic
+openshift_hosted_logging_deploy=true
+openshift_master_logging_public_url=https://kibana.cloud.expertsfactory.com
+## Registry
+#openshift_hosted_registry_storage_kind=object
+#openshift_hosted_registry_storage_provider=s3
+#openshift_hosted_registry_storage_s3_accesskey=access_key_id
+#openshift_hosted_registry_storage_s3_secretkey=secret_access_key
+#openshift_hosted_registry_storage_s3_regionendpoint=https://myendpoint.example.com/
+#openshift_hosted_registry_storage_s3_bucket=bucket_name
+#openshift_hosted_registry_storage_s3_region=bucket_region
+#openshift_hosted_registry_storage_s3_chunksize=26214400
+#openshift_hosted_registry_storage_s3_rootdirectory=/registry
+#openshift_hosted_registry_pullthrough=true
+#openshift_hosted_registry_acceptschema2=true
+#openshift_hosted_registry_enforcequota=true
 deployment_type=origin
-
 # uncomment the following to enable htpasswd authentication; defaults to DenyAllPasswordIdentityProvider
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
-
-
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpassw
+d'}]
 # host group for masters
 [masters]
-master1.c.enhanced-mote-157823.internal containerized=true
-#master2.c.enhanced-mote-157823.internal containerized=true
-#master3.c.enhanced-mote-157823.internal containerized=true
-
+master-1 containerized=true
+#master-2 containerized=true
+#master-3 containerized=true
 # host group for etcd
 [etcd]
-master1.c.enhanced-mote-157823.internal containerized=true etcd_hostname=master1.c.enhanced-mote-157823.internal
-#master2.c.enhanced-mote-157823.internal containerized=true
-#master3.c.enhanced-mote-157823.internal containerized=true
-
+master-1 containerized=true etcd_hostname=master-1
+#master-2 containerized=true
+#master-3 containerized=true
 # host group for nodes, includes region info
 [nodes]
-master1.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
-#master2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
-#master3.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'master'}"
-node1.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'node'}"
-node2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'node'}"
-
+master-1 containerized=true openshift_node_labels="{'type':'master'}"
+#master-2 containerized=true openshift_node_labels="{'type':'master'}"
+#master-3 containerized=true openshift_node_labels="{'type':'master'}"
+node-1 containerized=true openshift_node_labels="{'type':'node'}"
+node-2 containerized=true openshift_node_labels="{'type':'node'}"
+infra-1 containerized=false openshift_node_labels="{'region':'infra'}"
+infra-2 containerized=false openshift_node_labels="{'region':'infra'}"
 [lb]
-master1.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'lb'}"
-#master2.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'infra'}"
-#master3.c.enhanced-mote-157823.internal containerized=true openshift_node_labels="{'type':'infra'}"
-
-
+infra-1 containerized=false openshift_node_labels="{'type1':'infra'}"
+infra-2 containerized=false openshift_node_labels="{'type1':'infra'}"
+#master-3 containerized=true openshift_node_labels="{'type':'infra'}"
+[new_nodes]
+infra-1 containerized=false
+infra-2 containerized=false
