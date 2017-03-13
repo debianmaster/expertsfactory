@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: "true"
+  creationTimestamp: 2017-03-13T03:19:59Z
+  name: slow
+  resourceVersion: "126025"
+  selfLink: /apis/storage.k8s.io/v1beta1/storageclassesslow
+  uid: f07df148-079b-11e7-8838-42010a8a0002
+parameters:
+  type: pd-standard
+  zone: us-west1-a
+provisioner: kubernetes.io/gce-pd
