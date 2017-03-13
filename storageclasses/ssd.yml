@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  name: fast
+parameters:
+  type: pd-ssd
+  zone: us-west1-a
+provisioner: kubernetes.io/gce-pd
